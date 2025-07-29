@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AR.js – Exemplo Hiro com vídeo</title>
+    <title>AR.js – Vídeo com Marcador Personalizado</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.min.js"></script>
@@ -11,14 +11,22 @@
     </style>
   </head>
   <body>
-    <a-scene embedded arjs vr-mode-ui="enabled: false">
-      <a-marker preset="hiro">
-        <a-video src="./assets - Copia/horizontal.mp4" autoplay="true" loop="true" scale="2 2 2" position="0 0.5 0"></a-video>
-      </a-marker>
+    <video id="tremVideo" src="./assets - Copia/horizontal.mp4" autoplay loop muted playsinline webkit-playsinline style="display:none;"></video>
+
+    <a-scene embedded arjs="debugUIEnabled: false" vr-mode-ui="enabled: false">
       <a-marker type="pattern" url="./assets - Copia/pattern-trem.patt">
-        <a-video src="./assets/horizontal.mp4" autoplay="true" loop="true" scale="2 2 2" position="0 0.5 0"></a-video>
+        <a-video src="#tremVideo" position="0 0.5 0" rotation="-90 0 0" width="2" height="1.1"></a-video>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
+
+    <script>
+      window.addEventListener('load', () => {
+        const video = document.getElementById('tremVideo');
+        video.play().catch(err => {
+          console.warn('Erro ao iniciar vídeo:', err);
+        });
+      });
+    </script>
   </body>
 </html>
